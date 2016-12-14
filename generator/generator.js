@@ -1,10 +1,13 @@
-// constants - durations in miliseconds
+/**
+ * Converts morse transcription to audio wave file.
+ */
 
 var tone = require('tonegenerator');
 var header = require('waveheader');
 
 module.exports = {
     toAudio: function (morse, freq, dot_duration) {
+        // resolve constants from request or use defaults
         var dot_duration = dot_duration || 60;
         var freq = freq || 440;
         var dash_duration = 3 * dot_duration;
