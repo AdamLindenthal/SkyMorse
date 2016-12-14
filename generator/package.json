@@ -1,0 +1,16 @@
+{
+  "name": "generator-service",
+  "version": "1.0.0",
+  "description": "HTTP service, that produces audio/wav output based on morse code notation.",
+  "main": "generator.js",
+  "dependencies": {
+    "tonegenerator": "^0.2.1",
+    "waveheader": "^0.0.2"
+  },
+  "scripts": {
+    "start": "node generatorService.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Lindenthal",
+  "license": "ISC"
+}

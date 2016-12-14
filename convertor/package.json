@@ -1,0 +1,12 @@
+{
+  "name": "convertor",
+  "version": "1.0.0",
+  "description": "HTTP service, that converts text to morse code notation.",
+  "main": "conversion.js",
+  "scripts": {
+    "start": "node convertorService.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Lindenthal",
+  "license": "ISC"
+}

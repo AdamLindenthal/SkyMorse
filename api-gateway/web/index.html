@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="SkyMorse gateway">
+    <meta name="author" content="Adam Lindenthal">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Morse code generator</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <!--<link href="css/signin.css" rel="stylesheet">-->
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <!-- get bootstrap.js from CDN -->
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="../config.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var baseUrl = config.gateway.host + ":" + config.gateway.port;
+            var sound = null;
+            $(".btn").click(function (event) {
+                if (sound != null) {
+                    sound.pause();
+                }
+                uri = "/api/v1/generate?morse=" + encodeURIComponent($("#morse").val())
+                    + "&freq=" + $("#inputFreq").val()
+                    + "&dot=" + $("#inputDot").val();
+                sound = new Audio(uri);
+                sound.play();
+                event.preventDefault();
+            });
+
+            $("#inputText").keyup(function() {
+                var baseUrl = config.gateway.host + ":" + config.gateway.port;
+                uri = "/api/v1/convert?text=" + encodeURIComponent($("#inputText").val());
+                console.log(uri);
+                $.get(uri, function(data) {
+                    $("#morse").val(data);
+                    console.log(data);
+                });
+            })
+        });
+
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+</head>
+<body>
+
+<div class="container-fluid fill-screan">
+    <div class="col-md-6 col-md-offset-3">
+
+
+    <form class="form-horizontal" oninput="dotValue.value=inputDot.value; freqValue.value=inputFreq.value">
+        <h2 class="form-signin-heading"><span class="glyphicon glyphicon-console"></span>&nbsp;SkyMorse&nbsp;.-- </h2>
+        <label for="inputText" class="control-label">Text to convert</label>
+        <textarea id="inputText" class="form-control" placeholder="Enter text to be converted" required autofocus></textarea>
+
+        <label for="morse" class="control-label">Morse stranscription</label>
+        <textarea name="morse" readonly id="morse" class="form-control"></textarea>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label for="inputFreq" class="control-label">Frequency [Hz]</label>
+                    <output for="inputFreq" name="freqValue" >880</output>
+                    <input type="range" id="inputFreq" name="inputFreq" min="300" max="3000" value="880" class="form-control" placeholder="Tone Frequency" required>
+                </div>
+            </div>
+            <div class=col-md-6">
+                <div class="input-group">
+                    <label for="inputDot" class="control-label">Dot length [ms]</label>
+                    <output name="dotValue" for="inputDot">65</output>
+                    <input type="range" id="inputDot" name="inputDot" min="40" max="200" value="65" class="form-control" placeholder="Length of the dot" required>
+                </div>
+            </div>
+        </div>
+
+
+        <button class="btn btn-success" type="submit">Play&nbsp;<span class="glyphicon glyphicon-headphones"></span></button>
+    </form>
+    </div>
+    <a href="#" data-toggle="popover" title="SkyMorse help"
+       data-content="Converts written text to morse transcription and generates audio files according to given parameters.Tone height (frequency) and length speed of the transmission (dot-length) can be set. Click help again to dismiss.">Help</a>
+
+</div> <!-- /container -->
+</body>
+</html>

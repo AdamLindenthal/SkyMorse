@@ -1,0 +1,16 @@
+{
+  "name": "gateway",
+  "version": "1.0.0",
+  "description": "Gateway service for the SkyMorse project, exposes public API and routes the requests to private services. Also exposes web UI.",
+  "main": "gateway.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  },
+  "scripts": {
+    "start": "node gateway.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Lindenthal",
+  "license": "ISC"
+}
